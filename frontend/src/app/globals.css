@@ -1,3 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+html {
+    font-family: 'Figtree', sans-serif;
+    background-color: #f9f7f2;
+}
+
+.clip {
+    clip-path: circle(50% at 50% 50%);
+}
