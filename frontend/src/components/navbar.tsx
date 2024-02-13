@@ -12,7 +12,7 @@ export default function Navbar() {
       <div className="flex items-center justify-center gap-10 text-lg">
         <Link href={"/join"}>Join</Link>
         <Link href={"/join"}>Contribute</Link>
-        <Link href={"/join"}>Publishments</Link>
+        <Link href={"/join"}>Explore</Link>
       </div>
 
       <Button size={"lg"} className="rounded-none text-base p-6">
