@@ -1,5 +1,5 @@
 import React from "react";
-import JoinDaoForm from "./JoinDaoForm";
+import PublishResearchForm from "./PublishResearchForm";
 
 export default function JoinPage() {
   return (
@@ -13,7 +13,7 @@ export default function JoinPage() {
           PeerSci */}
         </p>
       </div>
-      <JoinDaoForm />
+      <PublishResearchForm />
     </div>
   );
 }

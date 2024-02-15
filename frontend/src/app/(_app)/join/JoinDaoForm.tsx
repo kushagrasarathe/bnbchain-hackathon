@@ -17,7 +17,7 @@ export default function JoinDaoForm() {
               <span>Your name</span>
               <Input
                 type="text"
-                placeholder="e.g: Vitalik Buterin"
+                placeholder="e.g: Ada Lovelace"
                 className="bg-[#f4f3f0] rounded-none"
               />
             </Label>
@@ -27,7 +27,7 @@ export default function JoinDaoForm() {
               <span>Institution/Affiliation</span>
               <Input
                 className="bg-[#f4f3f0] rounded-none"
-                placeholder="e.g: "
+                placeholder="e.g: University of Cambridge"
               />
             </Label>
           </div>
@@ -38,7 +38,7 @@ export default function JoinDaoForm() {
               <span>Field of Research</span>
               <Input
                 className="bg-[#f4f3f0] rounded-none"
-                placeholder="e.g: "
+                placeholder="e.g: Quantum Physics"
               />
             </Label>
           </div>
@@ -47,7 +47,7 @@ export default function JoinDaoForm() {
               <span>Research Interests:</span>
               <Input
                 className="bg-[#f4f3f0] rounded-none"
-                placeholder="e.g: "
+                placeholder="e.g: Quantum Computing, Artificial Intelligence"
               />
             </Label>
           </div>
@@ -59,9 +59,9 @@ export default function JoinDaoForm() {
               <span className="text-xs">{`( atleast 150 words )`}</span>
             </span>
             <Textarea
-              rows={5}
+              rows={4}
               className="bg-[#f4f3f0] rounded-none"
-              placeholder="e.g: As a scientist, my passion lies in unraveling the universe's mysteries through rigorous research. I specialize in quantum mechanics, exploring quantum entanglement's implications for computing and communication. Additionally, I delve into AI, merging neuroscience with machine learning to create more advanced algorithms. I contribute to experimental research, collaborating on projects from subatomic particles to medical biomaterials. Beyond research, I'm dedicated to promoting scientific literacy and inspiring future scientists. In essence, I thrive on pushing boundaries, seeking truth, and making meaningful contributions to society through scientific inquiry and innovation."
+              placeholder="e.g: As a passionate advocate for the marriage of mathematics and technology, I've embarked on a journey to unlock the potential of computing. From my early fascination with numbers to my groundbreaking work alongside Charles Babbage, I've dedicated my life to pushing the boundaries of what's possible. My vision extends beyond mere calculations; I aspire to weave creativity and logic into the fabric of our digital world. Join me on this thrilling adventure as we harness the power of technology to shape a brighter future for humanity."
             />
           </Label>
         </div>
@@ -70,13 +70,21 @@ export default function JoinDaoForm() {
             <span>
               Previous Research Contributions/Publications {`(if applicable)`}:
             </span>
-            <Input className="bg-[#f4f3f0] rounded-none" placeholder="e.g: " />
+            <Input
+              type="file"
+              multiple
+              className="bg-[#f4f3f0] rounded-none"
+              placeholder="e.g: Journal of Quantum Mechanics, Volume 23, Issue 4"
+            />
           </Label>
         </div>
         <div>
           <Label className="space-y-2">
             <span>Social Media/Website Links {`(optional)`}</span>
-            <Input className="bg-[#f4f3f0] rounded-none" placeholder="e.g: " />
+            <Input
+              className="bg-[#f4f3f0] rounded-none"
+              placeholder="e.g: https://twitter.com/username"
+            />
           </Label>
         </div>
         <Button className="rounded-none w-full">Create Proposal</Button>

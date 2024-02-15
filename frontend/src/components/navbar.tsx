@@ -13,6 +13,7 @@ export default function Navbar() {
         <Link href={"/join"}>Join</Link>
         <Link href={"/join"}>Contribute</Link>
         <Link href={"/join"}>Explore</Link>
+        <Link href={"/publish"}>Publish</Link>
       </div>
 
       <Button size={"lg"} className="rounded-none text-base p-6">
