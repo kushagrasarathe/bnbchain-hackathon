@@ -1,9 +1,38 @@
+"use client";
 import Image from "next/image";
 import hero from "@/assets/hero2.png";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 
 export default function Home() {
+  const pinToIPFS = async () => {
+    const data = {
+      name: "BNB Hakcathon",
+      description: "This is a test file",
+      category: "deSCI",
+    };
+
+    const res = await fetch("/api/pinata", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+
+    console.log(await res.json());
+  };
+
+  const fetchData = async () => {
+    const res = await fetch(
+      `https://orange-autonomous-clownfish-654.mypinata.cloud/ipfs/QmUErMkiAkGfUc34pFXtjWrbxhPUF89JmH8zxmSMWDiti9`,
+      {
+        method: "GET",
+      }
+    );
+
+    console.log(await res.json());
+  };
   return (
     // bg-gradient-to-tr from-[#f9f7f2] via-[#f9f7f2] to-[#eeffca]
     <main className="d:max-w-6xl mx-auto py-16 space-y-10 flex items-center justify-center flex-col">
