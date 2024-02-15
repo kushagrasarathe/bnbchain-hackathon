@@ -18,6 +18,7 @@ const saveFile = async (body: any) => {
       },
     };
     const response = await pinata.pinJSONToIPFS(body, options);
+    console.log(response);
     return response;
   } catch (error) {
     throw error;
@@ -26,10 +27,10 @@ const saveFile = async (body: any) => {
 
 export async function POST(req: NextRequest, res: NextResponse) {
   try {
-    const body = await req.body;
-
+    const body = await req.json();
+    console.log(body);
     const response = await saveFile(body);
-    return new Response(response.IpfsHash, { status: 200 });
+    return new Response(response, { status: 200 });
   } catch (e) {
     console.log(e);
     return new Response("Server Error", { status: 500 });

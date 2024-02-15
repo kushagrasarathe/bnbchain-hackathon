@@ -1,6 +1,18 @@
-# Polygon-BUIDL-IT
+# BNB Chain Hackathon
 
-This is our repo for the Polygon BUIDL IT Hackathon
+Challenge 6: Decentralized Science
+Main Objectives/Goals:
+
+Open access to scientific data and publications ✅
+Crowdsourced peer-review ✅
+Decentralized funding of scientific research ✅
+NFT-based scientific data ownership
+
+Challenge Description:
+
+We are looking for a team of developers who can create a decentralized scientific application to transform and optimize the efficiency of the research process. Decentralized science (DeSci) on the BNB Chain aims to address long-standing challenges in scientific research, including limited data access, opaque funding processes, lack of transparency, limited collaboration incentives, and public engagement deficit.
+
+DeSci utilizes blockchain technology and Web3 principles to transform the scientific ecosystem through open access to research, decentralized peer review, crowdsourced funding, NFT-based data ownership, and seamless data sharing and collaboration. By addressing these challenges, DeSci has the potential to accelerate scientific progress, enhance transparency and accountability, promote equitable research, democratize scientific knowledge, and create new economic opportunities for researchers.
 
 # 10/8/2022
 

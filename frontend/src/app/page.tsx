@@ -1,6 +1,35 @@
+"use client";
 import Image from "next/image";
 
 export default function Home() {
+  const pinToIPFS = async () => {
+    const data = {
+      name: "BNB Hakcathon",
+      description: "This is a test file",
+      category: "deSCI",
+    };
+
+    const res = await fetch("/api/pinata", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+
+    console.log(await res.json());
+  };
+
+  const fetchData = async () => {
+    const res = await fetch(
+      `https://orange-autonomous-clownfish-654.mypinata.cloud/ipfs/QmUErMkiAkGfUc34pFXtjWrbxhPUF89JmH8zxmSMWDiti9`,
+      {
+        method: "GET",
+      }
+    );
+
+    console.log(await res.json());
+  };
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
       <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">
@@ -8,6 +37,9 @@ export default function Home() {
           Get started by editing&nbsp;
           <code className="font-mono font-bold">src/app/page.tsx</code>
         </p>
+        <button onClick={() => pinToIPFS()}>Submit</button>
+        <button onClick={() => fetchData()}>GET</button>
+
         <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:h-auto lg:w-auto lg:bg-none">
           <a
             className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
