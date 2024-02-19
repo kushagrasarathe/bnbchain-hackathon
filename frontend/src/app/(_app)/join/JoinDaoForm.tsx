@@ -34,13 +34,13 @@ const initialFormValues: JoinDAOFormValues = {
 };
 
 export default function JoinDaoForm() {
-  const [name, setName] = useState<string>();
-  const [Institution, setInstitution] = useState<string>();
-  const [foR, setFoR] = useState<string>();
-  const [researchInterests, setResearchInterests] = useState<string>();
-  const [about, setAbout] = useState<string>();
-  const [previousResearch, setPreviousResearch] = useState<File>();
-  const [socialMedia, setSocialMedia] = useState<string>();
+  // const [name, setName] = useState<string>();
+  // const [Institution, setInstitution] = useState<string>();
+  // const [foR, setFoR] = useState<string>();
+  // const [researchInterests, setResearchInterests] = useState<string>();
+  // const [about, setAbout] = useState<string>();
+  // const [previousResearch, setPreviousResearch] = useState<File>();
+  // const [socialMedia, setSocialMedia] = useState<string>();
 
   const { address: account, isConnected } = useAccount();
   const publicClient = usePublicClient();
@@ -50,13 +50,12 @@ export default function JoinDaoForm() {
     try {
       // prepare the data
       const memberData = {
-        name,
-        Institution,
-        fieldofReseasrch: foR,
-        researchInterests,
-        about,
-
-        socialMedia,
+        Name: formValues.yourName,
+        Institution: formValues.institution,
+        FieldofReseasrch: formValues.fieldOfResearch,
+        ResearchInterests: formValues.researchInterests,
+        About: formValues.aboutYourself,
+        SocialMedia: formValues.socials,
       };
 
       // store the user info via the API
