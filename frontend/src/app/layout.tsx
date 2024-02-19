@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Figtree } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/navbar";
+import Provider from "@/components/provider";
+import { Toaster } from "@/components/ui/sonner";
 
 const figtree = Figtree({ subsets: ["latin"] });
 
@@ -18,8 +20,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={figtree.className}>
-        <Navbar />
-        <div>{children}</div>
+        <Provider>
+          <Navbar />
+          <div>{children}</div>
+        </Provider>
+        <Toaster richColors />
       </body>
     </html>
   );

@@ -35,13 +35,9 @@ export default function Home() {
   };
   return (
     // bg-gradient-to-tr from-[#f9f7f2] via-[#f9f7f2] to-[#eeffca]
-    <main className="d:max-w-6xl mx-auto py-16 space-y-10 flex items-center justify-center flex-col">
-      <div className="font-[800] text-7xl text-center ">
-        Publish Your{" "}
-        <span className="drop-shadow-md">
-          Research <br />
-        </span>
-        & <span className=" drop-shadow-md">Get</span> Grants
+    <main className="d:max-w-6xl mx-auto py-12 space-y-10 flex items-center justify-center flex-col">
+      <div className="font-[800] text-7xl text-center drop-shadow-md">
+        Publish Your Research <br />& Get Grants
       </div>
       <div className=" grid grid-cols-12 gap-y-12 w-full px-20 items-center">
         <div className="relative col-span-4 text-center w-full space-y-8 ">
@@ -52,13 +48,13 @@ export default function Home() {
           </p>
         </div>
         <div className=" col-span-4 flex items-center flex-col gap-8 justify-center ">
-          {/* <Button
+          <Button
             size={"lg"}
             variant={"outline"}
-            className="rounded-full text-base p-6 flex items-center gap-2"
+            className="rounded-full text-base p-6 flex items-center gap-2 w-60"
           >
-            Join Now <ArrowRight className="-rotate-45 " />
-          </Button> */}
+            Join Now
+          </Button>
           <div className="relative group max-w-sm mx-auto">
             <div className="bg-[#cdfb68] rounded-full absolute h-96 w-[320px] -bottom-1 right-6 border-4 shadow-md border-white"></div>
             <Image
@@ -68,7 +64,7 @@ export default function Home() {
             />
           </div>
         </div>
-        <div className="relative col-span-4  w-full space-y-8 ">
+        <div className="relative col-span-4 w-full space-y-8 ">
           <div className=" flex items-center gap-16">
             <div className=" space-y-2">
               <h1 className=" text-5xl font-bold">1K+</h1>
@@ -79,6 +75,7 @@ export default function Home() {
               <div>In Grants</div>
             </div>
           </div>
+
           {/* <Button
             size={"lg"}
             variant={"ghost"}
