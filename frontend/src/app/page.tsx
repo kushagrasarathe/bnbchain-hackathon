@@ -51,7 +51,7 @@ export default function Home() {
           <Button
             size={"lg"}
             variant={"outline"}
-            className="rounded-full text-base p-6 flex items-center gap-2 w-60"
+            className="rounded-full text-base p-6 flex items-center gap-2 w-44"
           >
             Join Now
           </Button>
@@ -75,47 +75,7 @@ export default function Home() {
               <div>In Grants</div>
             </div>
           </div>
-
-          {/* <Button
-            size={"lg"}
-            variant={"ghost"}
-            className="border border-neutral-400 rounded-full text-xl py-8 px-2 pl-8 gap-6 flex items-center"
-          >
-            Join Now{" "}
-            <ArrowRight className="-rotate-45 bg-[#cdfb68] rounded-full size-12 p-2 " />
-          </Button> */}
         </div>
-        {/* <div className="relative col-span-4 border-t border-l w-full space-y-4 border-neutral-400 pl-8 pt-3 p-2 ">
-          <div className="absolute -left-3.5 clip top-1.5 -rotate-45 w-20 border-t border-neutral-400 h-10 rounded-t-[40px] " />
-          <p>
-            PeerSci is a DAO for Scientists & Researchers around the world.
-            Become a member, share your research and get grants from the
-            community.
-          </p>
-          <Button size={"lg"} className="rounded-none text-base p-6">
-            Join Now
-          </Button>
-        </div>
-        <div className="relative col-span-4 border-t border-r w-full space-y-4 border-neutral-400 pr-8 pt-3 p-2 flex flex-col items-center justify-center">
-          <div className="absolute -right-3.5 clip top-1.5 rotate-45 w-20 border-t border-neutral-400 h-10 rounded-t-[40px] " />
-          <p className=" text-right">
-            PeerSci is a DAO for Scientists & Researchers around the world.
-            Become a member, share your research and get grants from the
-            community.
-          </p>
-          <Button size={"lg"} className="rounded-none text-base p-6 ml-auto">
-            Join Now
-          </Button>
-        </div>
-        <div className="relative col-span-12 border-b border-x w-full space-y-4 border-neutral-400 pr-8 pt-3 pb-6 ">
-          <div className="absolute -right-3.5 clip bottom-1.5 rotate-[135deg] w-20 border-t border-neutral-400 h-10 rounded-t-[40px]  " />
-          <div className="absolute -left-3.5 clip bottom-1.5 -rotate-[135deg] w-20 border-t border-neutral-400 h-10 rounded-t-[40px] " />
-          <p className="text-center">
-            PeerSci is a DAO for Scientists & Researchers around the world.
-            Become a member, share your research and get grants from the
-            community.
-          </p>
-        </div> */}
       </div>
     </main>
   );

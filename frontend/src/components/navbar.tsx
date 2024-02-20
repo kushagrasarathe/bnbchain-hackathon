@@ -18,13 +18,6 @@ export default function Navbar() {
       <Link href={"/"} className=" text-3xl font-bold">
         PeerSci
       </Link>
-      {/* 
-      <div className="flex items-center justify-center gap-10 text-lg">
-        <Link href={"/join"}>Join</Link>
-        <Link href={"/join"}>Contribute</Link>
-        <Link href={"/join"}>Explore</Link>
-        <Link href={"/publish"}>Publish</Link>
-      </div> */}
 
       <div className="flex items-center gap-3">
         <ConnectWalletButton />
@@ -37,18 +30,32 @@ export default function Navbar() {
 export const NavMenu = () => {
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger>
-        <Button variant={"outline"}>
+      <DropdownMenuTrigger asChild>
+        <Button variant={"outline"} className=" h-9 rounded-none w-12 px-1 p-0">
           <Menu />
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent>
-        <DropdownMenuLabel>My Account</DropdownMenuLabel>
+      <DropdownMenuContent className="rounded-none mr-24 mt-1 shadow-sm w-36">
+        <DropdownMenuLabel>Navigation Menu</DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>Profile</DropdownMenuItem>
-        <DropdownMenuItem>Billing</DropdownMenuItem>
-        <DropdownMenuItem>Team</DropdownMenuItem>
-        <DropdownMenuItem>Subscription</DropdownMenuItem>
+        <Link href={"/join"}>
+          <DropdownMenuItem className="cursor-pointer">Join</DropdownMenuItem>
+        </Link>
+        <Link href={"/contribute"}>
+          <DropdownMenuItem className="cursor-pointer">
+            Contribute
+          </DropdownMenuItem>
+        </Link>
+        <Link href={"/explore"}>
+          <DropdownMenuItem className="cursor-pointer">
+            Explore
+          </DropdownMenuItem>
+        </Link>
+        <Link href={"/publish"}>
+          <DropdownMenuItem className="cursor-pointer">
+            Publish
+          </DropdownMenuItem>
+        </Link>
       </DropdownMenuContent>
     </DropdownMenu>
   );

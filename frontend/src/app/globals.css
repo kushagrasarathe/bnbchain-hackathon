@@ -12,3 +12,8 @@ html {
 .clip {
     clip-path: circle(50% at 50% 50%);
 }
+
+.clip2 {
+    clip-path: polygon(0 0, 100% 0, 61% 100%, 0% 100%);
+
+}

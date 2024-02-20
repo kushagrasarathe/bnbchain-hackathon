@@ -35,8 +35,8 @@ export const ConnectWalletButton = () => {
               if (!connected) {
                 return (
                   <Button
-                    size={"lg"}
-                    className="rounded-none text-base p-6"
+                    size={"sm"}
+                    className="rounded-none text-base py-3 px-4"
                     onClick={openConnectModal}
                     type="button"
                   >
@@ -47,11 +47,11 @@ export const ConnectWalletButton = () => {
               if (chain.unsupported) {
                 return (
                   <Button
-                    size={"lg"}
+                    size={"sm"}
                     variant={"destructive"}
                     onClick={openChainModal}
                     type="button"
-                    className="rounded-none text-base p-6"
+                    className="rounded-none text-base py-3 px-4"
                   >
                     Wrong network
                   </Button>
@@ -66,7 +66,7 @@ export const ConnectWalletButton = () => {
                     onClick={openChainModal}
                   >
                     {chain.hasIcon && (
-                      <div className="mx-2">
+                      <div className="mr-2">
                         {chain.iconUrl && (
                           <img
                             alt={chain.name ?? "Chain icon"}
@@ -82,7 +82,7 @@ export const ConnectWalletButton = () => {
                     size={"sm"}
                     variant={"outline"}
                     onClick={openAccountModal}
-                    className="rounded-none text-base py-3 px-4"
+                    className="rounded-none text-base py-4 px-4"
                     type="button"
                   >
                     {account.displayName}
