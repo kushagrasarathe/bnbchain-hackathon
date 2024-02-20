@@ -221,7 +221,7 @@ export default function JoinDaoForm() {
               onChange={handleChange}
               className="bg-[#f4f3f0] rounded-none"
               placeholder="e.g: As a passionate advocate for the marriage of mathematics and technology, I've embarked on a journey to unlock the potential of computing. From my early fascination with numbers to my groundbreaking work alongside Charles Babbage, I've dedicated my life to pushing the boundaries of what's possible. My vision extends beyond mere calculations; I aspire to weave creativity and logic into the fabric of our digital world. Join me on this thrilling adventure as we harness the power of technology to shape a brighter future for humanity."
-              onChange={(e) => setAbout(e.target.value)}
+              // onChange={(e) => setAbout(e.target.value)}
             />
           </Label>
         </div>

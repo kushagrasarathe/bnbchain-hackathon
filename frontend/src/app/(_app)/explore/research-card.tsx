@@ -27,7 +27,7 @@ export default function ResearchCard({
             variant={"default"}
             // onClick={openChainModal}
             type="button"
-            className="rounded-none text-base py-3 px-4 w-full"
+            className="rounded-none text-base py-3 px-4 w-full bg-[#c4fd49] hover:bg-[#c4fd49]/90  text-black"
           >
             Read Research
           </Button>
