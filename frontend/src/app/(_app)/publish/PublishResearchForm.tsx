@@ -6,7 +6,11 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import React, { useState } from "react";
 import { toast } from "sonner";
-
+import { useAccount, usePublicClient, useWalletClient } from "wagmi";
+import {
+  DAOMember_ABI,
+  DAOMember_Contract_Address,
+} from "@/constants/constants";
 interface PublishResearchFormValues {
   title: string;
   institution: string;
@@ -40,6 +44,81 @@ const initialFormValues: PublishResearchFormValues = {
 export default function PublishResearchForm() {
   const [formValues, setFormValues] =
     useState<PublishResearchFormValues>(initialFormValues);
+  const { address: account, isConnected } = useAccount();
+  const publicClient = usePublicClient();
+  const { data: walletClient } = useWalletClient();
+
+  const publishResearch = async () => {
+    try {
+      // store the research Paper File
+
+      const researchPaperFileCID = "";
+
+      // store the whole data
+      const researchPaperData = {
+        title: formValues.title,
+        institution: formValues.institution,
+        abstract: formValues.abstract,
+        introduction: formValues.introduction,
+        methodology: formValues.methodology,
+        results: formValues.results,
+        discussion: formValues.discussion,
+        conclusion: formValues.conclusion,
+        references: formValues.references,
+        fundingSource: formValues.fundingSource,
+        acknowledgments: formValues.acknowledgments,
+        researchPaper: researchPaperFileCID,
+      };
+
+      // store the user info via the API
+      const res = await fetch("/api/pinata/storeJSON", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(researchPaperData),
+      });
+
+      console.log(await res.json());
+
+      const researchPaperCID = (await res.json()).response;
+
+      // perform the transaction
+      if (!publicClient) {
+        // setIsLoading(false);
+        console.log("No Wallet Detected");
+        return;
+      }
+      const data = await publicClient.simulateContract({
+        account,
+        address: DAOMember_Contract_Address,
+        abi: DAOMember_ABI,
+        functionName: "addResearch",
+        args: [researchPaperCID],
+      });
+
+      if (!walletClient) {
+        // setIsLoading(false);
+        console.log("No Wallet Detected");
+        return;
+      }
+
+      const tx = await walletClient.writeContract(data.request);
+      console.log("Transaction Sent");
+      const transaction = await publicClient.waitForTransactionReceipt({
+        hash: tx,
+      });
+      console.log(transaction);
+      console.log(data.result);
+      // setIsLoading(false);
+      return {
+        transaction,
+        data,
+      };
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -224,7 +303,10 @@ export default function PublishResearchForm() {
             />
           </Label>
         </div>
-        <Button onClick={onSubmit} className="rounded-none w-full">
+        <Button
+          onClick={() => publishResearch()}
+          className="rounded-none w-full"
+        >
           Publish Proposal
         </Button>
       </div>

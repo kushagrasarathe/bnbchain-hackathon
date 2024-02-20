@@ -78,7 +78,7 @@ export const Whitelist_ABI = [
     stateMutability: "view",
     type: "function",
   },
-];
+] as const;
 
 export const MemberNFT_ABI = [
   {
@@ -639,7 +639,7 @@ export const MemberNFT_ABI = [
     stateMutability: "nonpayable",
     type: "function",
   },
-];
+] as const;
 
 export const ContributorNFT_ABI = [
   {
@@ -1186,7 +1186,7 @@ export const ContributorNFT_ABI = [
     stateMutability: "nonpayable",
     type: "function",
   },
-];
+] as const;
 
 export const DAOFunds_ABI = [
   {
@@ -1343,7 +1343,7 @@ export const DAOFunds_ABI = [
     stateMutability: "payable",
     type: "receive",
   },
-];
+] as const;
 
 export const DAOMember_ABI = [
   {
@@ -1964,7 +1964,7 @@ export const DAOMember_ABI = [
     stateMutability: "view",
     type: "function",
   },
-];
+] as const;
 
 export const Grants_ABI = [
   {
@@ -2592,4 +2592,4 @@ export const Grants_ABI = [
     stateMutability: "view",
     type: "function",
   },
-];
+] as const;
