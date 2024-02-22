@@ -9,13 +9,15 @@ import {
   sepolia,
   polygonMumbai,
   goerli,
+  bscTestnet,
+  bsc,
 } from "wagmi/chains";
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 
 const config = getDefaultConfig({
   appName: "Discovery Donar",
   projectId: "afdac16b07284976cc7f71299771b2b7",
-  chains: [sepolia, polygonMumbai, goerli],
+  chains: [bscTestnet, bsc],
 });
 
 const queryClient = new QueryClient();

@@ -30,7 +30,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
     const body = await req.json();
     console.log(body);
     const response = await saveJSON(body);
-    return new Response(response, { status: 200 });
+    return new Response(JSON.stringify(response), { status: 200 });
   } catch (e) {
     console.log(e);
     return new Response("Server Error", { status: 500 });
