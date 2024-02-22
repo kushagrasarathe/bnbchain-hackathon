@@ -14,23 +14,22 @@ import { useAccount, usePublicClient, useWalletClient } from "wagmi";
 
 export default function ExplorePage() {
   const { address: account, isConnected } = useAccount();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const publicClient = usePublicClient();
   const { data: walletClient } = useWalletClient();
-  const [researches, setResearches] =
-    useState<
-      ({ Id: bigint; Title: any; Description: any; Content: any } | undefined)[]
-    >();
+  const [researches, setResearches] = useState<({} | undefined)[]>();
 
   // fetched the member.json
   const fetchIPFS = async (metadataURI: string) => {
     try {
       console.log("Fetching from IPFS ...");
-      const URL = `https://ipfs.io/ipfs/${metadataURI}/research.json`;
+      const URL = `https://orange-autonomous-clownfish-654.mypinata.cloud/ipfs/${metadataURI}`;
       const response = await fetch(URL);
       const data = await response.json();
       return data;
     } catch (error) {
       console.log(error);
+      setIsLoading(false);
     }
   };
 
@@ -52,14 +51,15 @@ export default function ExplorePage() {
       console.log(request.researchPaperURI);
       const response = await fetchIPFS(request.researchPaperURI);
       const parsedRequest = {
-        Id: _id,
-        Title: response.Name,
-        Description: response.Description,
-        Content: response.contentURL,
+        id: _id,
+        cid: request.researchPaperURI,
+        ...response,
       };
       console.log(parsedRequest);
       return parsedRequest;
     } catch (error) {
+      setIsLoading(false);
+
       console.log(error);
     }
   };
@@ -69,7 +69,9 @@ export default function ExplorePage() {
     try {
       // setLoading(true);
       // setMessage("Fetching data...");
+      setIsLoading(true);
       console.log("starting ...");
+
       const data = await publicClient?.readContract({
         account,
         address: DAOMember_Contract_Address,
@@ -90,13 +92,18 @@ export default function ExplorePage() {
       /// set the array of the objects of the requests is stored and can be rendered then
       setResearches(_researches);
       // setLoading(false);
+      setIsLoading(false);
     } catch (error) {
+      setIsLoading(false);
+
       console.log(error);
     }
   };
 
   useEffect(() => {
-    get();
+    if (!researches && !isLoading) {
+      get();
+    }
   }, []);
   // fetch the researches
 
@@ -118,21 +125,27 @@ export default function ExplorePage() {
         </div>
       </div> */}
       <div className="grid grid-cols-12 [&>*]:col-span-12 md:[&>*]:col-span-6 gap-10">
-        <ResearchCard
-          id={2332}
-          title="Title Here"
-          description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae
-          necessitatibus eum aut fuga veniam. A quia ab vitae officia alias
-          corporis a."
-        />
-        <ResearchCard
+        {researches &&
+          researches.map((research) => {
+            return (
+              <ResearchCard
+                // @ts-ignore
+                id={research.id}
+                // @ts-ignore
+                title={research.title}
+                // @ts-ignore
+                description={research.abstract}
+              />
+            );
+          })}
+        {/* <ResearchCard
           id={2332}
           title="Title Here"
           description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae
           necessitatibus eum aut fuga veniam. A quia ab vitae officia alias
           tempora optio labore dignissimos aliquam voluptas. Numquam molestias
           corporis a."
-        />
+        /> */}
       </div>
     </div>
   );

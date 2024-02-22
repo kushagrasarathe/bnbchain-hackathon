@@ -91,7 +91,7 @@ export default function JoinDaoForm() {
 
       // store the research via the API
       console.log(previousResearch);
-      console.log(await previousResearch?.arrayBuffer());
+      // console.log(await previousResearch?.arrayBuffer());
       // const formData = new FormData();
       // formData.append("file", previousResearch?.stream());
       // console.log(formData);
@@ -253,8 +253,7 @@ export default function JoinDaoForm() {
               multiple
               className="bg-[#f4f3f0] rounded-none"
               placeholder="e.g: Journal of Quantum Mechanics, Volume 23, Issue 4"
-              // @ts-ignore
-              onChange={(e) => setPreviousResearch(e.target.files[0])}
+              onChange={(e) => setPreviousResearch(e.target.files?.[0])}
             />
           </Label>
         </div>
