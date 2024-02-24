@@ -16,11 +16,38 @@ export default function PreviewPublish({
   acknowledgments,
   researchPaper,
 }: PublishResearchFormValues) {
+  const allFieldsEmpty = ([...props]) => props.every((prop) => !prop);
+
+  const isFormEmpty = allFieldsEmpty([
+    title,
+    institution,
+    abstract,
+    introduction,
+    methodology,
+    results,
+    discussion,
+    conclusion,
+    references,
+    fundingSource,
+    acknowledgments,
+    researchPaper,
+  ]);
+
+  if (isFormEmpty) {
+    return (
+      <div className="">
+        Please fill out the publish form fields to preview them here.
+      </div>
+    );
+  }
+
   return (
     <div>
       <div className="space-y-5">
-        <div className=" flex items-center w-full justify-between">
-          {title && <h1 className="text-3xl font-semibold">{title}</h1>}
+        <div className="flex items-center w-full justify-between flex-wrap gap-3">
+          {title && (
+            <h1 className="text-xl md:text-3xl font-semibold">{title}</h1>
+          )}
           {institution && (
             <Badge variant={"outline"} className="font-semibold text-sm">
               Institution: {institution}

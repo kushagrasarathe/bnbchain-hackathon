@@ -11,5 +11,5 @@ export default function AppLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return <div className=" mx-auto max-w-6xl pb-10">{children}</div>;
+  return <div className="mx-auto max-w-6xl pb-10 px-5 md:px-0">{children}</div>;
 }

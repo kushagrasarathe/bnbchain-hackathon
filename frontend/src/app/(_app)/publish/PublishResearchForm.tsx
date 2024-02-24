@@ -152,7 +152,7 @@ export default function PublishResearchForm() {
         </TabsList>
         <div>
           <TabsContent value="form" className="w-full">
-            <Card className="p-8 rounded-none border border-neutral-700 shadow-[8px_8px_0px_0px] space-y-4 ">
+            <Card className="p-6 md:p-8 rounded-none border border-neutral-700 shadow-[5px_5px_0px_0px] space-y-4 ">
               <div className="space-y-5">
                 <div className="flex items-center justify-between gap-5">
                   <div className="w-full">
@@ -328,7 +328,7 @@ export default function PublishResearchForm() {
             </Card>
           </TabsContent>
           <TabsContent value="preview" className="w-full">
-            <Card className="p-8 rounded-none border border-neutral-700 shadow-[8px_8px_0px_0px] space-y-4 ">
+            <Card className="p-6 md:p-8 rounded-none border border-neutral-700 shadow-[5px_5px_0px_0px] space-y-4 ">
               <PreviewPublish
                 title={formValues.title}
                 institution={formValues.institution}

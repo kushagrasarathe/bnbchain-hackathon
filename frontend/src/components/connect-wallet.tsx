@@ -58,10 +58,10 @@ export const ConnectWalletButton = () => {
                 );
               }
               return (
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2 flex-wrap-reverse">
                   <Button
                     size={"sm"}
-                    className="rounded-none text-base py-3 px-4 flex items-center"
+                    className="rounded-none text-base py-3 px-4 flex items-center w-full md:w-auto"
                     variant={"outline"}
                     onClick={openChainModal}
                   >
@@ -82,7 +82,7 @@ export const ConnectWalletButton = () => {
                     size={"sm"}
                     variant={"outline"}
                     onClick={openAccountModal}
-                    className="rounded-none text-base py-4 px-4"
+                    className="rounded-none text-base py-4 px-4 w-full md:w-auto"
                     type="button"
                   >
                     {account.displayName}
