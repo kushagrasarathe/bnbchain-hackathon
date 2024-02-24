@@ -14,6 +14,7 @@ import SupportResearchModal from "./support-research-modal";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { Separator } from "@/components/ui/separator";
+import Loading from "@/components/loader";
 
 export default function ResearchPage({ params }: { params: { id: string } }) {
   const { address: account, isConnected } = useAccount();
@@ -109,6 +110,10 @@ export default function ResearchPage({ params }: { params: { id: string } }) {
       fetchRequests(BigInt(params.id));
     }
   }, [params.id]);
+
+  // if (true) {
+  //   return <Loading />;
+  // }
 
   return (
     <div className="md:py-12 py-5 flex items-start md:flex-row flex-col justify-between gap-8 relative">
