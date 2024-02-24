@@ -12,6 +12,7 @@ import {
 import React, { useState } from "react";
 import { useAccount, usePublicClient, useWalletClient } from "wagmi";
 import { toast } from "sonner";
+import axios from "axios";
 
 interface JoinDAOFormValues {
   yourName: string;
@@ -24,13 +25,14 @@ interface JoinDAOFormValues {
 }
 
 const initialFormValues: JoinDAOFormValues = {
-  yourName: "",
-  institution: "",
-  fieldOfResearch: "",
-  researchInterests: "",
-  aboutYourself: "",
+  yourName: "Ada Lovelace",
+  institution: "University of Cambridge",
+  fieldOfResearch: "Quantum Physics",
+  researchInterests: "Quantum Computing, Artificial Intelligence",
+  aboutYourself:
+    "As a passionate advocate for the marriage of mathematics and technology, I've embarked on a journey to unlock the potential of computing. From my early fascination with numbers to my groundbreaking work alongside Charles Babbage, I've dedicated my life to pushing the boundaries of what's possible. My vision extends beyond mere calculations; I aspire to weave creativity and logic into the fabric of our digital world. Join me on this thrilling adventure as we harness the power of technology to shape a brighter future for humanity.",
   previousResearches: "",
-  socials: "",
+  socials: "https://twitter.com/username",
 };
 
 export default function JoinDaoForm() {
@@ -39,12 +41,22 @@ export default function JoinDaoForm() {
   // const [foR, setFoR] = useState<string>();
   // const [researchInterests, setResearchInterests] = useState<string>();
   // const [about, setAbout] = useState<string>();
-  // const [previousResearch, setPreviousResearch] = useState<File>();
+  const [previousResearch, setPreviousResearch] = useState<File>();
   // const [socialMedia, setSocialMedia] = useState<string>();
 
   const { address: account, isConnected } = useAccount();
   const publicClient = usePublicClient();
   const { data: walletClient } = useWalletClient();
+
+  const [formValues, setFormValues] =
+    useState<JoinDAOFormValues>(initialFormValues);
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value } = e.target;
+    setFormValues({ ...formValues, [name]: value });
+  };
 
   const createProposal = async () => {
     try {
@@ -57,39 +69,51 @@ export default function JoinDaoForm() {
         About: formValues.aboutYourself,
         SocialMedia: formValues.socials,
       };
+      console.log(memberData);
 
-      // store the user info via the API
-      const res = await fetch("/api/pinata/storeJSON", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(memberData),
-      });
+      // // store the user info via the API
+      // const resMember = await fetch(
+      //   "http://localhost:3000/api/pinata/storeJSON",
+      //   {
+      //     method: "POST",
+      //     body: JSON.stringify(memberData),
+      //   }
+      // );
 
-      console.log(await res.json());
+      const resMember = await axios.post("/api/pinata/storeJSON", memberData);
 
-      const memberDataCID = (await res.json()).response;
+      // console.log(await res.json());
+      console.log(await resMember.data);
+
+      // const memberDataCID = (await res.json()).response;
+      const memberDataCID = (await resMember.data).IpfsHash;
+      console.log(memberDataCID);
 
       // store the research via the API
-
+      console.log(previousResearch);
+      // console.log(await previousResearch?.arrayBuffer());
       // const formData = new FormData();
-      // formData.append("file", previousResearch);
+      // formData.append("file", previousResearch?.stream());
+      // console.log(formData);
+      const fileBuffer = await previousResearch?.arrayBuffer();
 
-      // const res = await fetch("/api/pinata/storeFile", {
-      //   method: "POST",
-      //   headers: {
-      //     "Content-Type": "application/json",
-      //   },
-      //   body: formData,
-      // });
+      const resFile = await fetch("/api/pinata/storeFile", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/octet-stream",
+        },
+        body: fileBuffer,
+      });
 
       // console.log(await res.json());
 
-      const researchCID =
-        "ipfs://bafkreifxtpdf5lcmkqjqmpe4wjgfl4rbov23ryn5merejridxk27pfzufq";
+      const researchCID = (await resFile.json()).IpfsHash;
+      console.log(researchCID);
 
-      // take the CID and call the contract
+      // const researchCID =
+      //   "ipfs://bafkreifxtpdf5lcmkqjqmpe4wjgfl4rbov23ryn5merejridxk27pfzufq";
+
+      // // take the CID and call the contract
       if (!publicClient) {
         // setIsLoading(false);
         console.log("No Wallet Detected");
@@ -124,16 +148,6 @@ export default function JoinDaoForm() {
     } catch (error) {
       console.log(error);
     }
-  };
-
-  const [formValues, setFormValues] =
-    useState<JoinDAOFormValues>(initialFormValues);
-
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    const { name, value } = e.target;
-    setFormValues({ ...formValues, [name]: value });
   };
 
   // const onSubmit = () => {
@@ -233,13 +247,13 @@ export default function JoinDaoForm() {
             <Input
               type="file"
               name="previousResearches"
-              value={formValues.previousResearches}
-              onChange={handleChange}
+              // value={formValues.previousResearches}
+              // value={previousResearch?}
+              // onChange={handleChange}
               multiple
               className="bg-[#f4f3f0] rounded-none"
               placeholder="e.g: Journal of Quantum Mechanics, Volume 23, Issue 4"
-              // @ts-ignore
-              // onChange={(e) => setPreviousResearch(e.target.files[0])}
+              onChange={(e) => setPreviousResearch(e.target.files?.[0])}
             />
           </Label>
         </div>

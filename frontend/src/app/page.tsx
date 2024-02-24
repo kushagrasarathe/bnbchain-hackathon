@@ -6,21 +6,25 @@ import { ArrowLeft, ArrowRight } from "lucide-react";
 
 export default function Home() {
   const pinToIPFS = async () => {
-    const data = {
-      name: "BNB Hakcathon",
-      description: "This is a test file",
-      category: "deSCI",
-    };
+    try {
+      const data = {
+        name: "BNB Hakcathon",
+        description: "This is a test file",
+        category: "deSCI",
+      };
 
-    const res = await fetch("/api/pinata", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    });
+      const res = await fetch("/api/pinata/storeJSON", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
 
-    console.log(await res.json());
+      console.log(await res.json());
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const fetchData = async () => {
@@ -52,6 +56,7 @@ export default function Home() {
             size={"lg"}
             variant={"outline"}
             className="rounded-full text-base p-6 flex items-center gap-2 w-44"
+            onClick={pinToIPFS}
           >
             Join Now
           </Button>

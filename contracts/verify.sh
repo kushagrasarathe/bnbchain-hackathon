@@ -1,0 +1,15 @@
+# newDAOMember
+npx hardhat verify --network bnbSCTestnet 0x95b7dD6016aa284720DE1a2ef6acaae6afab8F90 0xa2484ed60a4e9458bbae7efe12c1d25394d97450
+
+# Member NFT
+npx hardhat verify --network bnbSCTestnet 0xa2484Ed60a4e9458BbAe7eFE12c1d25394D97450 "ipfs://bafkreifxtpdf5lcmkqjqmpe4wjgfl4rbov23ryn5merejridxk27pfzufq"
+
+# Contributor NFT
+npx hardhat verify --network bnbSCTestnet 0x3C3b0f18071716140cc1139e04a9bCf9Aa7284B2 "ipfs://bafybeibz4dfk6zxsorvq5xiul7ncwuytfewpjchmhr5kf3scimst7vaete/metadata.json" 0x9D0CF5672A4FFfaa6BA58DB070Ae1Da8D0F130af
+
+# Funds
+npx hardhat verify --network bnbSCTestnet 0x9D0CF5672A4FFfaa6BA58DB070Ae1Da8D0F130af 
+
+# Grants
+npx hardhat verify --network bnbSCTestnet 0xDD6662f373f8BD7150f072BC2dCF4b24Ab942b67 0xa2484Ed60a4e9458BbAe7eFE12c1d25394D97450 0x9D0CF5672A4FFfaa6BA58DB070Ae1Da8D0F130af
+

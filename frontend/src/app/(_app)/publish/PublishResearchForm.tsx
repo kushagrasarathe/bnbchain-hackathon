@@ -30,23 +30,30 @@ export interface PublishResearchFormValues {
 }
 
 const initialFormValues: PublishResearchFormValues = {
-  title: "",
-  institution: "",
-  abstract: "",
-  introduction: "",
-  methodology: "",
-  results: "",
-  discussion: "",
-  conclusion: "",
-  references: "",
-  fundingSource: "",
-  acknowledgments: "",
+  title: "Quantum Entanglement and Its Applications",
+  institution: "University of Cambridge",
+  abstract:
+    "This research explores the phenomenon of quantum entanglement and its potential applications in quantum computing, cryptography, and teleportation.",
+  introduction:
+    " Introduction provides background information and context for the research.",
+  methodology:
+    "Methodology describes the methods and techniques used in the research.",
+  results: "Results present the data, analyses, and interpretations.",
+  discussion:
+    "Discussion discusses the significance of the results, implications, and future directions.",
+  conclusion:
+    "Conclusion summarizes the main findings and conclusions of the research.",
+  references: "Journal of Quantum Mechanics Volume 23 Issue 4",
+  fundingSource: "National Science Foundation",
+  acknowledgments:
+    "Acknowledge individuals or organizations that contributed to the research but are not listed as authors.",
   researchPaper: "",
 };
 
 export default function PublishResearchForm() {
   const [formValues, setFormValues] =
     useState<PublishResearchFormValues>(initialFormValues);
+  const [researchPaper, setResearchPaper] = useState<File>();
   const { address: account, isConnected } = useAccount();
   const publicClient = usePublicClient();
   const { data: walletClient } = useWalletClient();
@@ -54,8 +61,23 @@ export default function PublishResearchForm() {
   const publishResearch = async () => {
     try {
       // store the research Paper File
+      // store the research via the API
+      console.log(researchPaper);
+      // console.log(await previousResearch?.arrayBuffer());
+      // const formData = new FormData();
+      // formData.append("file", previousResearch?.stream());
+      // console.log(formData);
+      const fileBuffer = await researchPaper?.arrayBuffer();
 
-      const researchPaperFileCID = "";
+      const resFile = await fetch("/api/pinata/storeFile", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/octet-stream",
+        },
+        body: fileBuffer,
+      });
+
+      const researchPaperFileCID = (await resFile.json()).IpfsHash;
 
       // store the whole data
       const researchPaperData = {
@@ -72,6 +94,7 @@ export default function PublishResearchForm() {
         acknowledgments: formValues.acknowledgments,
         researchPaper: researchPaperFileCID,
       };
+      console.log(researchPaperData);
 
       // store the user info via the API
       const res = await fetch("/api/pinata/storeJSON", {
@@ -82,9 +105,12 @@ export default function PublishResearchForm() {
         body: JSON.stringify(researchPaperData),
       });
 
-      console.log(await res.json());
+      // console.log(await res.json());
 
-      const researchPaperCID = (await res.json()).response;
+      const researchPaperCID = (await res.json()).IpfsHash;
+      console.log(researchPaperCID);
+
+      // const researchPaperCID = "QmSQNQ9zyfVXvT3wwwHjWRNDL4KuJ2tF72mKv9j5DbSw6v";
 
       // perform the transaction
       if (!publicClient) {
@@ -312,8 +338,9 @@ export default function PublishResearchForm() {
                     <Input
                       type="file"
                       name="researchPaper"
-                      value={formValues.researchPaper}
-                      onChange={handleChange}
+                      // value={formValues.researchPaper}
+                      // onChange={handleChange}
+                      onChange={(e) => setResearchPaper(e.target.files?.[0])}
                       className="bg-[#f4f3f0] rounded-none"
                     />
                   </Label>
