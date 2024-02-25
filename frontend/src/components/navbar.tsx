@@ -23,7 +23,7 @@ import { Separator } from "./ui/separator";
 
 export default function Navbar() {
   return (
-    <div className="py-6 pt-8 px-5 md:max-w-6xl mx-auto flex items-center justify-between">
+    <div className="py-6 pt-8 px-5 md:px-0 md:max-w-6xl mx-auto flex items-center justify-between">
       <Link href={"/"} className="text-xl md:text-3xl font-bold">
         PeerSci
       </Link>
@@ -53,14 +53,19 @@ export const NavMenu = () => {
         <Link href={"/join"}>
           <DropdownMenuItem className="cursor-pointer">Join</DropdownMenuItem>
         </Link>
-        <Link href={"/contribute"}>
-          <DropdownMenuItem className="cursor-pointer">
-            Contribute
-          </DropdownMenuItem>
-        </Link>
         <Link href={"/explore"}>
           <DropdownMenuItem className="cursor-pointer">
             Explore
+          </DropdownMenuItem>
+        </Link>
+        <Link href={"/dashboard"}>
+          <DropdownMenuItem className="cursor-pointer">
+            Dashboard
+          </DropdownMenuItem>
+        </Link>
+        <Link href={"/contribute"}>
+          <DropdownMenuItem className="cursor-pointer">
+            Contribute
           </DropdownMenuItem>
         </Link>
         <Link href={"/publish"}>

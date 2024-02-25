@@ -349,7 +349,7 @@ export default function PublishResearchForm() {
                   onClick={() => publishResearch()}
                   className="rounded-none w-full"
                 >
-                  Publish Proposal
+                  Publish Research
                 </Button>
               </div>
             </Card>
@@ -370,6 +370,12 @@ export default function PublishResearchForm() {
                 acknowledgments={formValues.acknowledgments}
                 researchPaper={formValues.researchPaper}
               />
+              <Button
+                onClick={() => publishResearch()}
+                className="rounded-none w-full"
+              >
+                Publish Research
+              </Button>
             </Card>
           </TabsContent>
         </div>
