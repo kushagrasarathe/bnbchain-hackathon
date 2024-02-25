@@ -16,35 +16,31 @@ import { cn } from "@/lib/utils";
 import { Separator } from "@/components/ui/separator";
 import Loading from "@/components/loader";
 
+export interface PublishResearchValues {
+  ID: string;
+  CID: string;
+  ResearcherAddress: `0x${string}`;
+  DateOfPublication: string;
+  title: string;
+  institution: string;
+  abstract: string;
+  introduction: string;
+  methodology: string;
+  results: string;
+  discussion: string;
+  conclusion: string;
+  references: string;
+  fundingSource: string;
+  acknowledgments: string;
+  researchPaper: string;
+}
+
 export default function ResearchPage({ params }: { params: { id: string } }) {
   const { address: account, isConnected } = useAccount();
   const publicClient = usePublicClient();
   const { data: walletClient } = useWalletClient();
-  const [research, setResearch] = useState<{}>();
+  const [research, setResearch] = useState<PublishResearchValues>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
-
-  // remp
-  const title = "Lorem Ipsum Title";
-  const institution = "XYZ Institute";
-  const abstract =
-    "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Aperiam laborum magni, optio sit architecto rem dolores nisi illo! Aliquid consectetur amet voluptas ea aperiam natus est harum ullam, dicta ut?";
-  const introduction =
-    "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Aperiam laborum magni, optio sit architecto rem dolores nisi illo! Aliquid consectetur amet voluptas ea aperiam natus est harum ullam, dicta ut?";
-  const methodology =
-    "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Aperiam laborum magni, optio sit architecto rem dolores nisi illo! Aliquid consectetur amet voluptas ea aperiam natus est harum ullam, dicta ut?";
-  const results =
-    "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Aperiam laborum magni, optio sit architecto rem dolores nisi illo! Aliquid consectetur amet voluptas ea aperiam natus est harum ullam, dicta ut?";
-  const discussion =
-    "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Aperiam laborum magni, optio sit architecto rem dolores nisi illo! Aliquid consectetur amet voluptas ea aperiam natus est harum ullam, dicta ut?";
-  const conclusion =
-    "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Aperiam laborum magni, optio sit architecto rem dolores nisi illo! Aliquid consectetur amet voluptas ea aperiam natus est harum ullam, dicta ut?";
-  const references =
-    "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Aperiam laborum magni, optio sit architecto rem dolores nisi illo! Aliquid consectetur amet voluptas ea aperiam natus est harum ullam, dicta ut?";
-  const fundingSource =
-    "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Aperiam laborum magni, optio sit architecto rem dolores nisi illo! Aliquid consectetur amet voluptas ea aperiam natus est harum ullam, dicta ut?";
-  const acknowledgments =
-    "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Aperiam laborum magni, optio sit architecto rem dolores nisi illo! Aliquid consectetur amet voluptas ea aperiam natus est harum ullam, dicta ut?";
-  const researchPaper = "";
 
   // fetched the member.json
   const fetchIPFS = async (metadataURI: string) => {
@@ -87,7 +83,11 @@ export default function ResearchPage({ params }: { params: { id: string } }) {
       const response = await fetchIPFS(request.researchPaperURI);
       console.log(response);
       const parsedRequest = {
-        Id: _id,
+        Id: Number(_id),
+        ResearcherAddress: request.researcher,
+        DateOfPublication: new Date(
+          Number(request.dateOfPublication) * 1000
+        ).toDateString(),
         // Title: response.Name,
         // Description: response.Description,
         // Content: response.Content,
@@ -121,78 +121,81 @@ export default function ResearchPage({ params }: { params: { id: string } }) {
         <div>
           <div className="space-y-5">
             <div className="flex items-center w-full justify-between flex-wrap gap-3">
-              {title && (
-                <h1 className="text-xl md:text-3xl font-semibold">{title}</h1>
+              {research && (
+                <h1 className="text-xl md:text-3xl font-semibold">
+                  {research.title}
+                </h1>
               )}
-              {institution && (
+              {research && (
                 <Badge variant={"outline"} className="font-semibold text-sm">
-                  Institution: {institution}
+                  Institution: {research.institution}
                 </Badge>
               )}
+              {research && <p>{research.DateOfPublication}</p>}
             </div>
 
-            {abstract && (
+            {research && (
               <div className="space-y-2">
                 <div className="text-lg font-semibold">Abstract</div>
-                <p>{abstract}</p>
+                <p>{research.abstract}</p>
               </div>
             )}
 
-            {introduction && (
+            {research && (
               <div className="space-y-2">
                 <div className="text-lg font-semibold">Introduction</div>
-                <p>{introduction}</p>
+                <p>{research.introduction}</p>
               </div>
             )}
 
-            {methodology && (
+            {research && (
               <div className="space-y-2">
                 <div className="text-lg font-semibold">Methodology</div>
-                <p>{methodology}</p>
+                <p>{research.methodology}</p>
               </div>
             )}
 
-            {results && (
+            {research && (
               <div className="space-y-2">
                 <div className="text-lg font-semibold">Results</div>
-                <p>{results}</p>
+                <p>{research.results}</p>
               </div>
             )}
 
-            {discussion && (
+            {research && (
               <div className="space-y-2">
                 <div className="text-lg font-semibold">Discussion</div>
-                <p>{discussion}</p>
+                <p>{research.discussion}</p>
               </div>
             )}
 
-            {conclusion && (
+            {research && (
               <div className="space-y-2">
                 <div className="text-lg font-semibold">Conclusion</div>
-                <p>{conclusion}</p>
+                <p>{research.conclusion}</p>
               </div>
             )}
 
-            {references && (
+            {research && (
               <div className="space-y-2">
                 <div className="text-lg font-semibold">References</div>
-                <p>{references}</p>
+                <p>{research.references}</p>
               </div>
             )}
 
-            {fundingSource && (
+            {research && (
               <div className="space-y-2">
                 <div className="text-lg font-semibold">
                   Funding {`Source(s)`}
                 </div>
-                <p>{fundingSource}</p>
+                <p>{research.fundingSource}</p>
               </div>
             )}
 
-            {acknowledgments && (
+            {research && (
               <div className="space-y-2">
                 <div className="text-lg font-semibold">Acknowledgments</div>
-                <p>{acknowledgments}</p>
+                <p>{research.acknowledgments}</p>
               </div>
             )}
           </div>
@@ -207,7 +210,11 @@ export default function ResearchPage({ params }: { params: { id: string } }) {
               science!
             </p>
           </div>
-          <SupportResearchModal />
+          {research && (
+            <SupportResearchModal
+              ResearcherAddress={research?.ResearcherAddress}
+            />
+          )}
         </Card>
         <div className="space-y-3">
           <div className=" text-xl font-semibold">More Resarch Papers</div>
