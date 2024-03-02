@@ -64,7 +64,7 @@ export default function JoinDaoForm() {
       const memberData = {
         Name: formValues.yourName,
         Institution: formValues.institution,
-        FieldofReseasrch: formValues.fieldOfResearch,
+        FieldOfResearch: formValues.fieldOfResearch,
         ResearchInterests: formValues.researchInterests,
         About: formValues.aboutYourself,
         SocialMedia: formValues.socials,
