@@ -11,6 +11,7 @@ import {
 import React, { useEffect, useState } from "react";
 import { erc20Abi, parseEther } from "viem";
 import { useAccount, usePublicClient, useWalletClient } from "wagmi";
+import Contribute from "./contribute";
 
 export default function ExplorePage() {
   const { address: account, isConnected } = useAccount();
@@ -109,8 +110,9 @@ export default function ExplorePage() {
 
   return (
     <div className="space-y-5 py-6">
-      <div className="space-y-1">
+      <div className="flex items-center justify-between">
         <h1 className=" text-2xl font-semibold">Read published researches</h1>
+        <Contribute />
       </div>
       {/* <div className="flex relative hadow-[8px_8px_0px_0px] order-2 border-black">
         <div className="absolute p-10 bg-[#f9f7f2]/40 backdrop-blur-xl h-full w-3/5 clip2">
@@ -126,9 +128,10 @@ export default function ExplorePage() {
       </div> */}
       <div className="grid grid-cols-12 [&>*]:col-span-12 md:[&>*]:col-span-6 gap-10">
         {researches &&
-          researches.map((research) => {
+          researches.map((research, idx) => {
             return (
               <ResearchCard
+                key={idx}
                 // @ts-ignore
                 id={research.id}
                 // @ts-ignore
