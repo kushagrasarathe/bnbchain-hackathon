@@ -63,11 +63,11 @@ export const NavMenu = () => {
             Dashboard
           </DropdownMenuItem>
         </Link>
-        <Link href={"/contribute"}>
+        {/* <Link href={"/contribute"}>
           <DropdownMenuItem className="cursor-pointer">
             Contribute
           </DropdownMenuItem>
-        </Link>
+        </Link> */}
         <Link href={"/publish"}>
           <DropdownMenuItem className="cursor-pointer">
             Publish
@@ -100,7 +100,7 @@ export const MobileNavMenu = () => {
           </SheetHeader>
           <div className="flex flex-col items-start gap-4 py-6">
             <Link href={"/join"}>Join</Link>
-            <Link href={"/contribute"}>Contribute</Link>
+            {/* <Link href={"/contribute"}>Contribute</Link> */}
             <Link href={"/explore"}>Explore</Link>
             <Link href={"/publish"}>Publish</Link>
             <ConnectWalletButton />
