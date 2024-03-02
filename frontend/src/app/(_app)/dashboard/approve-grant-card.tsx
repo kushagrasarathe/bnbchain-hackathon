@@ -12,35 +12,31 @@ import {
 } from "@/components/ui/tooltip";
 
 interface Props {
-  name: string;
-  about: string;
-  fieldOfResearch: string;
+  title: string;
+  desc: string;
+  amount: number;
 }
 
-export default function ApproveEntryCard({
-  name,
-  about,
-  fieldOfResearch,
-}: Props) {
+export default function ApproveGrantCard({ title, desc, amount }: Props) {
   return (
-    <Card className="p-5 md:max-w-xl rounded-none border border-neutral-700 shadow-[4px_4px_0px_0px] space-y-3 ">
+    <Card className="p-5 max-w-md rounded-none border border-neutral-700 shadow-[4px_4px_0px_0px] space-y-3 ">
       <div className="flex items-center justify-between">
-        <div className=" text-xl font-semibold">{name}</div>
-        <Badge variant={"outline"} className="bg-[#cdfb68] px-3 py-0.5">
-          {fieldOfResearch}
-        </Badge>
+        <div className=" text-xl font-semibold">{title}</div>
       </div>
       <div>
         <TooltipProvider>
           <Tooltip>
             <TooltipTrigger>
-              <div className="line-clamp-3 text-start">{about}</div>
+              <div className="line-clamp-3 text-start">{desc}</div>
             </TooltipTrigger>
             <TooltipContent className=" max-w-md p-4" side="bottom">
-              <div className="text-start">{about}</div>
+              <div className="text-start">{desc}</div>
             </TooltipContent>
           </Tooltip>
         </TooltipProvider>
+      </div>
+      <div>
+        Grant Requested: <span className="font-semibold">$ {amount}</span>
       </div>
       <div className="flex items-center justify-between *:w-full gap-3 pt-1">
         <Button variant={"destructive"}>Deny</Button>
