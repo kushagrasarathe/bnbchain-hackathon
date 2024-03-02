@@ -18,12 +18,7 @@ interface Props {
   amount: number;
 }
 import { useAccount, usePublicClient, useWalletClient } from "wagmi";
-import {
-  DAOMember_ABI,
-  DAOMember_Contract_Address,
-  Grants_ABI,
-  Grants_Contract_Address,
-} from "@/constants/constants";
+import { Grants_ABI, Grants_Contract_Address } from "@/constants/constants";
 
 export default function ApproveGrantCard({ id, title, desc, amount }: Props) {
   const { address: account, isConnected } = useAccount();
