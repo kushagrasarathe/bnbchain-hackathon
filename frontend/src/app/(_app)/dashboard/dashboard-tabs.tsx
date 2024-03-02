@@ -7,6 +7,8 @@ import { useAccount, usePublicClient, useWalletClient } from "wagmi";
 import {
   DAOMember_ABI,
   DAOMember_Contract_Address,
+  Grants_ABI,
+  Grants_Contract_Address,
 } from "@/constants/constants";
 
 export interface Entry {
@@ -27,6 +29,7 @@ export default function DashboardTabs() {
   const publicClient = usePublicClient();
   const { data: walletClient } = useWalletClient();
   const [entries, setEntries] = useState<(Entry | undefined)[]>();
+  const [grantReqs, setGrantReqs] = useState<({} | undefined)[]>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   // fetched the member.json
@@ -114,9 +117,81 @@ export default function DashboardTabs() {
     }
   };
 
+  // fetch the data from the contract and then fetched the same from IPFS
+  // returns an object that is then stored in the Array of request
+  const fetchGrantRequest = async (_id: bigint) => {
+    try {
+      // filter the request from the contract on the basis of the voting time if closed then don't show
+
+      const request = await publicClient?.readContract({
+        account,
+        address: Grants_Contract_Address,
+        abi: Grants_ABI,
+        functionName: "getRequests",
+        args: [_id],
+      });
+      if (!request) {
+        console.log("No request found");
+        return;
+      }
+      console.log(request);
+      const response = await fetchIPFS(request.content);
+      const parsedRequest = {
+        id: _id,
+        cid: request.content,
+        ...response,
+      };
+      console.log(parsedRequest);
+      return parsedRequest;
+    } catch (error) {
+      setIsLoading(false);
+
+      console.log(error);
+    }
+  };
+
+  // fetches the no. of requests , then fetches the each request and store the result in the array of requests
+  const getGrantRequests = async () => {
+    try {
+      // setLoading(true);
+      // setMessage("Fetching data...");
+      setIsLoading(true);
+      console.log("starting ...");
+
+      const data = await publicClient?.readContract({
+        account,
+        address: Grants_Contract_Address,
+        abi: Grants_ABI,
+        functionName: "_GrantsRequests",
+      });
+
+      const total = Number(data);
+      const promises = [];
+      console.log(total);
+      for (let id = 0; id < total; id++) {
+        const requestsPromise = fetchGrantRequest(BigInt(id));
+        promises.push(requestsPromise);
+      }
+      const _grantReqs = await Promise.all(promises);
+      console.log(_grantReqs);
+      console.log("ending...");
+      /// set the array of the objects of the requests is stored and can be rendered then
+      setGrantReqs(_grantReqs);
+      // setLoading(false);
+      setIsLoading(false);
+    } catch (error) {
+      setIsLoading(false);
+
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     if (!entries && !isLoading) {
       getEntries();
+    }
+    if (!grantReqs && !isLoading) {
+      getGrantRequests();
     }
   }, []);
 
@@ -157,11 +232,22 @@ export default function DashboardTabs() {
               </div>
               <ApplyGrantModal />
             </div>
-            <ApproveGrantCard
+            {grantReqs &&
+              grantReqs.map((grantReq) => {
+                return (
+                  <ApproveGrantCard
+                    id={grantReq?.id ? grantReq.id : BigInt(0)}
+                    title={grantReq?.title ? grantReq.title : "N/A"}
+                    desc={grantReq?.desc ? grantReq.desc : "N/A"}
+                    amount={grantReq?.amount ? grantReq.amount : 0}
+                  />
+                );
+              })}
+            {/* <ApproveGrantCard
               title="Proposed Research Title Here"
               desc="Lorem ipsum dolor sit amet consectetur adipisicing elit. Porro, neque beatae ratione omnis provident doloribus ad repellendus facere eos quia blanditiis fugiat asperiores magnam ea voluptates similique? Accusantium, quia voluptas.Lorem ipsum dolor sit amet consectetur adipisicing elit. Porro, neque beatae ratione omnis provident doloribus ad repellendus facere eos quia blanditiis fugiat asperiores magnam ea voluptates similique? Accusantium, quia voluptas."
               amount={876238}
-            />
+            /> */}
           </TabsContent>
           {/* <TabsContent value="yourResearches" className="space-y-8">
             <div className="pb-3 border-b border-neutral-300">
