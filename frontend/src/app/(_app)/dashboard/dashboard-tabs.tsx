@@ -21,15 +21,23 @@ export interface Entry {
   SocialMedia: string;
   ResearchInterests: string;
 }
+export interface GrantRequest {
+  id: bigint;
+  cid: string;
+  description: string;
+  researchTitle: string;
+  amount: number;
+}
 import ApproveGrantCard from "./approve-grant-card";
 import ApplyGrantModal from "./apply-grant-modal";
+import { formatEther } from "viem";
 
 export default function DashboardTabs() {
   const { address: account, isConnected } = useAccount();
   const publicClient = usePublicClient();
   const { data: walletClient } = useWalletClient();
   const [entries, setEntries] = useState<(Entry | undefined)[]>();
-  const [grantReqs, setGrantReqs] = useState<({} | undefined)[]>();
+  const [grantReqs, setGrantReqs] = useState<(GrantRequest | undefined)[]>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   // fetched the member.json
@@ -139,6 +147,7 @@ export default function DashboardTabs() {
       const parsedRequest = {
         id: _id,
         cid: request.content,
+        amount: Number(formatEther(request.amountRequested)),
         ...response,
       };
       console.log(parsedRequest);
@@ -237,8 +246,10 @@ export default function DashboardTabs() {
                 return (
                   <ApproveGrantCard
                     id={grantReq?.id ? grantReq.id : BigInt(0)}
-                    title={grantReq?.title ? grantReq.title : "N/A"}
-                    desc={grantReq?.desc ? grantReq.desc : "N/A"}
+                    title={
+                      grantReq?.researchTitle ? grantReq.researchTitle : "N/A"
+                    }
+                    desc={grantReq?.description ? grantReq.description : "N/A"}
                     amount={grantReq?.amount ? grantReq.amount : 0}
                   />
                 );
