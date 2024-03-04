@@ -168,7 +168,11 @@ export default function Contribute() {
               />
             </Label>
           </div>
-          <Button onClick={contribute} className="w-full rounded-none">
+          <Button
+            disabled={isLoading}
+            onClick={contribute}
+            className="w-full rounded-none"
+          >
             Contribute
           </Button>
         </div>

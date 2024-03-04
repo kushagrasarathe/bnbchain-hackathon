@@ -27,6 +27,7 @@ import {
   DAOMember_Contract_Address,
 } from "@/constants/constants";
 import { toast } from "sonner";
+import { Loader } from "@/components/loader";
 
 export default function Contribute() {
   const { address: account, isConnected } = useAccount();
@@ -46,16 +47,20 @@ export default function Contribute() {
       if (!publicClient) {
         setIsLoading(false);
         console.log("No Wallet Detected");
+        toast.error("No Wallet Detected");
         return;
       }
       if (!walletClient) {
         setIsLoading(false);
         console.log("No Wallet Detected");
+        toast.error("No Wallet Detected");
+
         return;
       }
       if (!amount || !tokenAddress) {
         setIsLoading(false);
         console.log("Inputs missing ");
+        toast.error("Inputs missing");
         return;
       }
 
@@ -194,8 +199,12 @@ export default function Contribute() {
               />
             </Label>
           </div>
-          <Button onClick={contribute} className="w-full rounded-none">
-            Contribute
+          <Button
+            disabled={isLoading}
+            onClick={contribute}
+            className="w-full rounded-none"
+          >
+            {isLoading ? <Loader /> : "Contribute"}
           </Button>
         </div>
       </DialogContent>
