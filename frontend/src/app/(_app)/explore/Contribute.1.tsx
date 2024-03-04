@@ -1,30 +1,21 @@
 "use client";
-
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
 import React, { useState } from "react";
-
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { erc20Abi, parseEther } from "viem";
 import { useAccount, usePublicClient, useWalletClient } from "wagmi";
-interface ContributeForm {
-  amount: number;
-}
 import {
   ContributorNFT_ABI,
   ContributorNFT_Contract_Address,
   DAOFunds_Contract_Address,
-  DAOMember_ABI,
-  DAOMember_Contract_Address,
 } from "@/constants/constants";
 import { toast } from "sonner";
 
@@ -80,13 +71,7 @@ export default function Contribute() {
         });
         console.log(transaction);
         console.log(data.result);
-        setIsLoading(false);
-
-        toast.dismiss();
-        toast.success(
-          `Contribution comlpeted for ${amount} Tokens to the Fund contract`
-        );
-
+        // setIsLoading(false);
         return {
           transaction,
           data,
@@ -106,25 +91,14 @@ export default function Contribute() {
         });
 
         console.log(transaction);
-        setIsLoading(false);
-        toast.dismiss();
-        toast.success(
-          `Contribution comlpeted for ${amount} Tokens to the Fund contract`
-        );
-
+        // setIsLoading(false);
         return {
           transaction,
         };
       } else {
-        toast.dismiss();
-        toast.error(`Invalid token address , Select a Token`);
         console.log("Invalid Token Address");
       }
-      setIsLoading(false);
     } catch (error) {
-      setIsLoading(false);
-      toast.dismiss();
-      toast.error("Error Occured");
       console.log(error);
     }
   };

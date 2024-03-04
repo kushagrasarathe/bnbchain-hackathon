@@ -13,6 +13,7 @@ import {
 } from "@/constants/constants";
 import PreviewPublish from "./PreviewPublish";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Loader } from "@/components/loader";
 
 export interface PublishResearchFormValues {
   title: string;
@@ -54,6 +55,7 @@ export default function PublishResearchForm() {
   const [formValues, setFormValues] =
     useState<PublishResearchFormValues>(initialFormValues);
   const [researchPaper, setResearchPaper] = useState<File>();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const { address: account, isConnected } = useAccount();
   const publicClient = usePublicClient();
   const { data: walletClient } = useWalletClient();
@@ -62,6 +64,8 @@ export default function PublishResearchForm() {
     try {
       // store the research Paper File
       // store the research via the API
+      setIsLoading(true);
+      toast.loading("Uploading research paper to IPFS");
       console.log(researchPaper);
       // console.log(await previousResearch?.arrayBuffer());
       // const formData = new FormData();
@@ -78,6 +82,9 @@ export default function PublishResearchForm() {
       });
 
       const researchPaperFileCID = (await resFile.json()).IpfsHash;
+
+      toast.dismiss();
+      toast.loading("Preparing and Storing the research Data on IPFS");
 
       // store the whole data
       const researchPaperData = {
@@ -110,12 +117,17 @@ export default function PublishResearchForm() {
       const researchPaperCID = (await res.json()).IpfsHash;
       console.log(researchPaperCID);
 
+      toast.dismiss();
+      toast.success(`Research Stored on IPFS with CID : ${researchPaperCID}`);
+
       // const researchPaperCID = "QmSQNQ9zyfVXvT3wwwHjWRNDL4KuJ2tF72mKv9j5DbSw6v";
 
       // perform the transaction
       if (!publicClient) {
-        // setIsLoading(false);
+        setIsLoading(false);
         console.log("No Wallet Detected");
+        toast.dismiss();
+        toast.error("No Wallet Detected");
         return;
       }
       const data = await publicClient.simulateContract({
@@ -127,11 +139,14 @@ export default function PublishResearchForm() {
       });
 
       if (!walletClient) {
-        // setIsLoading(false);
+        setIsLoading(false);
         console.log("No Wallet Detected");
+        toast.dismiss();
+        toast.error("No Wallet Detected");
         return;
       }
 
+      toast.loading("Creating the research record in the Contract..");
       const tx = await walletClient.writeContract(data.request);
       console.log("Transaction Sent");
       const transaction = await publicClient.waitForTransactionReceipt({
@@ -139,12 +154,16 @@ export default function PublishResearchForm() {
       });
       console.log(transaction);
       console.log(data.result);
-      // setIsLoading(false);
+      setIsLoading(false);
+      toast.dismiss();
+      toast.success(`Research Created with ID: ${data.result}`);
       return {
         transaction,
         data,
       };
     } catch (error) {
+      toast.dismiss();
+      toast.error("Error Occured");
       console.log(error);
     }
   };
@@ -371,10 +390,11 @@ export default function PublishResearchForm() {
                 researchPaper={formValues.researchPaper}
               />
               <Button
+                disabled={isLoading}
                 onClick={() => publishResearch()}
                 className="rounded-none w-full"
               >
-                Publish Research
+                {isLoading ? <Loader /> : "Publish Research"}
               </Button>
             </Card>
           </TabsContent>

@@ -11,7 +11,8 @@ import {
 import React, { useEffect, useState } from "react";
 import { erc20Abi, parseEther } from "viem";
 import { useAccount, usePublicClient, useWalletClient } from "wagmi";
-import Contribute from "./contribute";
+import Contribute from "./Contribute.1";
+import Loading from "@/components/loader";
 
 export default function ExplorePage() {
   const { address: account, isConnected } = useAccount();
@@ -107,6 +108,10 @@ export default function ExplorePage() {
     }
   }, []);
   // fetch the researches
+
+  if (isLoading) {
+    return <Loading />;
+  }
 
   return (
     <div className="space-y-5 py-6">

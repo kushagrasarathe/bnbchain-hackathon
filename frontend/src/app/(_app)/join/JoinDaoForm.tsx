@@ -13,6 +13,7 @@ import React, { useState } from "react";
 import { useAccount, usePublicClient, useWalletClient } from "wagmi";
 import { toast } from "sonner";
 import axios from "axios";
+import { Loader } from "@/components/loader";
 
 interface JoinDAOFormValues {
   yourName: string;
@@ -43,6 +44,7 @@ export default function JoinDaoForm() {
   // const [about, setAbout] = useState<string>();
   const [previousResearch, setPreviousResearch] = useState<File>();
   // const [socialMedia, setSocialMedia] = useState<string>();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const { address: account, isConnected } = useAccount();
   const publicClient = usePublicClient();
@@ -60,6 +62,7 @@ export default function JoinDaoForm() {
 
   const createProposal = async () => {
     try {
+      setIsLoading(true);
       // prepare the data
       const memberData = {
         Name: formValues.yourName,
@@ -70,6 +73,7 @@ export default function JoinDaoForm() {
         SocialMedia: formValues.socials,
       };
       console.log(memberData);
+      toast.loading("Preparing and Storing the Data on IPFS");
 
       // // store the user info via the API
       // const resMember = await fetch(
@@ -88,6 +92,9 @@ export default function JoinDaoForm() {
       // const memberDataCID = (await res.json()).response;
       const memberDataCID = (await resMember.data).IpfsHash;
       console.log(memberDataCID);
+
+      toast.dismiss();
+      toast.loading("Preparing and Storing the Previous research on IPFS");
 
       // store the research via the API
       console.log(previousResearch);
@@ -110,13 +117,18 @@ export default function JoinDaoForm() {
       const researchCID = (await resFile.json()).IpfsHash;
       console.log(researchCID);
 
+      toast.dismiss();
+      toast.success(`Research Stored on IPFS with CID : ${researchCID}`);
+
       // const researchCID =
       //   "ipfs://bafkreifxtpdf5lcmkqjqmpe4wjgfl4rbov23ryn5merejridxk27pfzufq";
 
       // // take the CID and call the contract
       if (!publicClient) {
-        // setIsLoading(false);
+        setIsLoading(false);
         console.log("No Wallet Detected");
+        toast.dismiss();
+        toast.error("No Wallet Detected");
         return;
       }
       const data = await publicClient.simulateContract({
@@ -128,10 +140,14 @@ export default function JoinDaoForm() {
       });
 
       if (!walletClient) {
-        // setIsLoading(false);
+        setIsLoading(false);
         console.log("No Wallet Detected");
+        toast.dismiss();
+        toast.error("No Wallet Detected");
         return;
       }
+      toast.dismiss();
+      toast.loading("Creating the proposal in the contract");
 
       const tx = await walletClient.writeContract(data.request);
       console.log("Transaction Sent");
@@ -140,12 +156,21 @@ export default function JoinDaoForm() {
       });
       console.log(transaction);
       console.log(data.result);
-      // setIsLoading(false);
+
+      toast.dismiss();
+      toast.success(
+        `Proposal Created in the contract with ID : ${data.result}`
+      );
+      setIsLoading(false);
+
       return {
         transaction,
         data,
       };
     } catch (error) {
+      toast.dismiss();
+      toast.error("Error Occured");
+      setIsLoading(false);
       console.log(error);
     }
   };
@@ -271,12 +296,14 @@ export default function JoinDaoForm() {
             />
           </Label>
         </div>
+
         <Button
+          disabled={isLoading}
           // onClick={onSubmit}
           className="rounded-none w-full"
           onClick={() => createProposal()}
         >
-          Create Proposal
+          {isLoading ? <Loader /> : "Create Proposal"}
         </Button>
       </div>
     </Card>

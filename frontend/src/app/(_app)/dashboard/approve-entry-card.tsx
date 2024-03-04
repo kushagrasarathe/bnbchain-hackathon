@@ -22,6 +22,8 @@ import {
   DAOMember_ABI,
   DAOMember_Contract_Address,
 } from "@/constants/constants";
+import { toast } from "sonner";
+import { Loader } from "@/components/loader";
 
 export default function ApproveEntryCard({
   id,
@@ -40,8 +42,14 @@ export default function ApproveEntryCard({
       if (!publicClient) {
         console.log("No Wallet Detected");
         setIsLoading(false);
+        toast.dismiss();
+        toast.error("No Wallet Detected");
         return;
       }
+      toast.loading(
+        "Processing Transaction , for voting on Entry Proposal request ..."
+      );
+
       let vote = _vote ? 0 : 1;
       const data = await publicClient.simulateContract({
         account,
@@ -55,6 +63,8 @@ export default function ApproveEntryCard({
         // setIsLoading(false);
         console.log("No Wallet Detected");
         setIsLoading(false);
+        toast.dismiss();
+        toast.error("No Wallet Detected");
         return;
       }
 
@@ -66,13 +76,16 @@ export default function ApproveEntryCard({
       console.log(transaction);
       console.log(data.result);
       setIsLoading(false);
+      toast.dismiss();
+      toast.success(`Vote added in the contract for Entry Proposal request`);
       return {
         transaction,
         data,
       };
     } catch (error) {
       setIsLoading(false);
-
+      toast.dismiss();
+      toast.error(`Error occured : ${error}`);
       console.log(error);
     }
   };
@@ -97,11 +110,19 @@ export default function ApproveEntryCard({
         </TooltipProvider>
       </div>
       <div className="flex items-center justify-between *:w-full gap-3 pt-1">
-        <Button onClick={() => vote(id, true)} variant={"default"}>
-          Approve
+        <Button
+          disabled={isLoading}
+          onClick={() => vote(id, true)}
+          variant={"default"}
+        >
+          {isLoading ? <Loader /> : "Approve"}
         </Button>
-        <Button onClick={() => vote(id, false)} variant={"destructive"}>
-          Deny
+        <Button
+          disabled={isLoading}
+          onClick={() => vote(id, false)}
+          variant={"destructive"}
+        >
+          {isLoading ? <Loader /> : "Deny"}
         </Button>
       </div>
     </Card>

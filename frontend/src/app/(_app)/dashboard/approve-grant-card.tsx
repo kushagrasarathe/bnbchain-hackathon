@@ -19,6 +19,8 @@ interface Props {
 }
 import { useAccount, usePublicClient, useWalletClient } from "wagmi";
 import { Grants_ABI, Grants_Contract_Address } from "@/constants/constants";
+import { toast } from "sonner";
+import { Loader } from "@/components/loader";
 
 export default function ApproveGrantCard({ id, title, desc, amount }: Props) {
   const { address: account, isConnected } = useAccount();
@@ -32,8 +34,12 @@ export default function ApproveGrantCard({ id, title, desc, amount }: Props) {
       if (!publicClient) {
         console.log("No Wallet Detected");
         setIsLoading(false);
+        toast.dismiss();
+        toast.error("No Wallet Detected");
         return;
       }
+
+      toast.loading("Processing Transaction , for voting on grant request ...");
       let vote = _vote ? 0 : 1;
       const data = await publicClient.simulateContract({
         account,
@@ -47,6 +53,8 @@ export default function ApproveGrantCard({ id, title, desc, amount }: Props) {
         // setIsLoading(false);
         console.log("No Wallet Detected");
         setIsLoading(false);
+        toast.dismiss();
+        toast.error("No Wallet Detected");
         return;
       }
 
@@ -58,13 +66,16 @@ export default function ApproveGrantCard({ id, title, desc, amount }: Props) {
       console.log(transaction);
       console.log(data.result);
       setIsLoading(false);
+      toast.dismiss();
+      toast.success(`Vote added in the contract for Grant Request`);
       return {
         transaction,
         data,
       };
     } catch (error) {
       setIsLoading(false);
-
+      toast.dismiss();
+      toast.error(`Error occured : ${error}`);
       console.log(error);
     }
   };
@@ -89,11 +100,19 @@ export default function ApproveGrantCard({ id, title, desc, amount }: Props) {
         Grant Requested: <span className="font-semibold">$ {amount}</span>
       </div>
       <div className="flex items-center justify-between *:w-full gap-3 pt-1">
-        <Button onClick={() => vote(id, true)} variant={"default"}>
-          Approve
+        <Button
+          disabled={isLoading}
+          onClick={() => vote(id, true)}
+          variant={"default"}
+        >
+          {isLoading ? <Loader /> : "Approve"}
         </Button>
-        <Button onClick={() => vote(id, false)} variant={"destructive"}>
-          Deny
+        <Button
+          disabled={isLoading}
+          onClick={() => vote(id, false)}
+          variant={"destructive"}
+        >
+          {isLoading ? <Loader /> : "Deny"}
         </Button>
       </div>
     </Card>

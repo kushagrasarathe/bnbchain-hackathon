@@ -9,6 +9,8 @@ import { Grants_ABI, Grants_Contract_Address } from "@/constants/constants";
 import { useAccount, usePublicClient, useWalletClient } from "wagmi";
 import { parseEther } from "viem";
 import axios from "axios";
+import { toast } from "sonner";
+import { Loader } from "@/components/loader";
 
 interface ApplyGrantFormValues {
   researchTitle: string;
@@ -40,6 +42,8 @@ export default function ApplyGrantForm() {
 
   const applyGrant = async () => {
     try {
+      setIsLoading(true);
+      toast.loading("Storing Grant Data ...");
       const grantData = {
         researchTitle: formValues.researchTitle,
         description: formValues.description,
@@ -55,10 +59,15 @@ export default function ApplyGrantForm() {
       const grantDataCID = (await resGrant.data).IpfsHash;
       console.log(grantDataCID);
 
+      toast.dismiss();
+      toast.success(`Grant Stored on IPFS with CID : ${grantDataCID}`);
+
       setIsLoading(true);
       if (!publicClient) {
         console.log("No Wallet Detected");
         setIsLoading(false);
+        toast.dismiss();
+        toast.error("No Wallet Detected");
         return;
       }
 
@@ -74,8 +83,12 @@ export default function ApplyGrantForm() {
         // setIsLoading(false);
         console.log("No Wallet Detected");
         setIsLoading(false);
+        toast.dismiss();
+        toast.error("No Wallet Detected");
         return;
       }
+      toast.dismiss();
+      toast.loading("Creating the proposal in the contract");
 
       const tx = await walletClient.writeContract(data.request);
       console.log("Transaction Sent");
@@ -85,6 +98,10 @@ export default function ApplyGrantForm() {
       console.log(transaction);
       console.log(data.result);
       setIsLoading(false);
+      toast.dismiss();
+      toast.success(
+        `Grant Proposal Created in the Contract with ID : ${data.result}`
+      );
       return {
         transaction,
         data,
@@ -134,8 +151,12 @@ export default function ApplyGrantForm() {
           />
         </Label>
       </div>
-      <Button onClick={applyGrant} className="w-full rounded-none">
-        Apply
+      <Button
+        disabled={isLoading}
+        onClick={applyGrant}
+        className="w-full rounded-none"
+      >
+        {isLoading ? <Loader /> : "Apply"}
       </Button>
     </div>
   );
