@@ -3,8 +3,10 @@ import Image from "next/image";
 import hero from "@/assets/hero2.png";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, ArrowRight } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
+  const router = useRouter();
   const pinToIPFS = async () => {
     try {
       const data = {
@@ -56,7 +58,7 @@ export default function Home() {
             size={"lg"}
             variant={"outline"}
             className="rounded-full text-base p-6 flex items-center gap-2 w-44"
-            onClick={pinToIPFS}
+            onClick={() => router.push("/join")}
           >
             Join Now
           </Button>
