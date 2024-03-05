@@ -31,25 +31,40 @@ export interface PublishResearchFormValues {
 }
 
 const initialFormValues: PublishResearchFormValues = {
-  title: "Quantum Entanglement and Its Applications",
-  institution: "University of Cambridge",
-  abstract:
-    "This research explores the phenomenon of quantum entanglement and its potential applications in quantum computing, cryptography, and teleportation.",
-  introduction:
-    " Introduction provides background information and context for the research.",
-  methodology:
-    "Methodology describes the methods and techniques used in the research.",
-  results: "Results present the data, analyses, and interpretations.",
-  discussion:
-    "Discussion discusses the significance of the results, implications, and future directions.",
-  conclusion:
-    "Conclusion summarizes the main findings and conclusions of the research.",
-  references: "Journal of Quantum Mechanics Volume 23 Issue 4",
-  fundingSource: "National Science Foundation",
-  acknowledgments:
-    "Acknowledge individuals or organizations that contributed to the research but are not listed as authors.",
+  title: "",
+  institution: "",
+  abstract: "",
+  introduction: "",
+  methodology: "",
+  results: "",
+  discussion: "",
+  conclusion: "",
+  references: "",
+  fundingSource: "",
+  acknowledgments: "",
   researchPaper: "",
 };
+
+// const initialFormValues: PublishResearchFormValues = {
+//   title: "Quantum Entanglement and Its Applications",
+//   institution: "University of Cambridge",
+//   abstract:
+//     "This research explores the phenomenon of quantum entanglement and its potential applications in quantum computing, cryptography, and teleportation.",
+//   introduction:
+//     " Introduction provides background information and context for the research.",
+//   methodology:
+//     "Methodology describes the methods and techniques used in the research.",
+//   results: "Results present the data, analyses, and interpretations.",
+//   discussion:
+//     "Discussion discusses the significance of the results, implications, and future directions.",
+//   conclusion:
+//     "Conclusion summarizes the main findings and conclusions of the research.",
+//   references: "Journal of Quantum Mechanics Volume 23 Issue 4",
+//   fundingSource: "National Science Foundation",
+//   acknowledgments:
+//     "Acknowledge individuals or organizations that contributed to the research but are not listed as authors.",
+//   researchPaper: "",
+// };
 
 export default function PublishResearchForm() {
   const [formValues, setFormValues] =
