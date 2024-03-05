@@ -248,9 +248,10 @@ export default function DashboardTabs() {
             </div>
             <div className=" grid grid-cols-12 md:*:col-span-6 col-span-12 gap-10">
               {entries &&
-                entries?.map((entry) => {
+                entries?.map((entry, id) => {
                   return (
                     <ApproveEntryCard
+                      key={id}
                       id={entry?.id ? entry.id : BigInt(0)}
                       name={entry?.Name ? entry.Name : "N/A"}
                       about={entry?.About ? entry.About : "N/A"}
@@ -270,9 +271,10 @@ export default function DashboardTabs() {
               <ApplyGrantModal />
             </div>
             {grantReqs &&
-              grantReqs.map((grantReq) => {
+              grantReqs.map((grantReq, id) => {
                 return (
                   <ApproveGrantCard
+                    key={id}
                     id={grantReq?.id ? grantReq.id : BigInt(0)}
                     title={
                       grantReq?.researchTitle ? grantReq.researchTitle : "N/A"
