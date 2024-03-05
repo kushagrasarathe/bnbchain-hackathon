@@ -1,11 +1,10 @@
-# Welcome to PeerSCI platform 
+# Welcome to PeerSCI platform 🔬 🌐 💡
 
 PeerSCI empowers scientific collaboration by offering a decentralized platform for researchers to share findings, apply for grants, and engage in peer review. Utilizing blockchain technology, it fosters transparency, open access to research, and community-driven funding, revolutionizing scientific discovery.
 
 <img width="579" alt="Screenshot 2024-03-05 at 8 24 06 PM" src="https://github.com/kushagrasarathe/bnbchain-hackathon/assets/91938348/e4eb0765-b73e-44c4-8ede-602275cb60c4">
 
-
-# Inspiration
+# Inspiration 
 We embarked on the journey to build PeerSCI with a vision to empower the research and scientific community by providing them with a decentralized platform for collaboration and knowledge sharing. Recognizing the lack of a robust platform in the Web3 space catering specifically to researchers and scientists, we aimed to fill this gap and create a unique ecosystem where individuals passionate about science can connect, collaborate, and contribute to the advancement of knowledge.
 
 We have been working on this project for the past 3-4 weeks to build something of value for the scientist and researcher community.
@@ -19,7 +18,7 @@ PeerSCI facilitates crowdsourced peer-review, allowing researchers to receive fe
 ### **3. Decentralized Funding of Scientific Research** <br/>
 Through decentralized funding mechanisms, PeerSCI enables researchers to secure funding for their projects directly from the community, reducing reliance on traditional funding sources and fostering innovation.
 
-# What it does
+# What it does 
 PeerSCI serves as a decentralized hub where researchers and scientists can join as DAO members, share their research, apply for grants, and engage in peer-to-peer collaboration. The platform facilitates a transparent and community-driven approach to research, allowing members to submit proposals for entry, grants, and research publications. Through decentralized governance and voting mechanisms, members collectively decide on the approval of proposals and the allocation of funds.
 
 Once a researcher becomes a DAO member, they receive a member NFT, granting them access to publish their research on IPFS via the platform's `/publish` page. The published research is then accessible to anyone on the internet through the /explore page, fostering open access to scientific knowledge.
@@ -31,8 +30,8 @@ Reaserchers can apply for the grants directly from their `/dashboard` by filling
 # How we built it
 As a team of two members, we collectively designed and developed PeerSCI from scratch, leveraging our diverse skill sets to bring the project to life.
 
-Kushagra Sarathe: Led the frontend development and design using Next.js, CSS, and JavaScript.
-Dhruv Agarwal: Focused on smart contract development and enhancement, ensuring the integrity and functionality of the platform's frontend.
+**Kushagra Sarathe**: Led the frontend development and design using Next.js, CSS, and JavaScript.
+**Dhruv Agarwal**: Focused on smart contract development and enhancement, ensuring the integrity and functionality of the platform's frontend.
 
 The frontend was developed using Next.js, CSS, and JavaScript, providing a responsive and user-friendly interface for seamless interaction with the platform.
 
@@ -46,7 +45,7 @@ PeerSCI's NFTs, including member NFTs and contributor NFTs, were minted on the B
 <br/>
 `frontend` - [/frontend](https://github.com/kushagrasarathe/bnbchain-hackathon/tree/main/frontend)
 
-# Sponsor Technologies Used
+# 🧑‍💻Technologies Used 🤖
 
 **BNB Smart Chain testnet** : All of our smart contracts are deployed on th BNB Smart chain testnet and so our infrastructure and interactions run on Polygon. Total 5 of them are there , that manages all the backend code including DAO , Voting, grants, Researches and members. Interaction with the contracts is done with help of wagmi.js and ethers.js . Testing is done well for all the contracts , to ensure they are secured and working properly.
 - [Grants Contract](https://testnet.bscscan.com/address/0xDD6662f373f8BD7150f072BC2dCF4b24Ab942b67)
@@ -62,7 +61,7 @@ PeerSCI's NFTs, including member NFTs and contributor NFTs, were minted on the B
 - [Member Contract keeper](https://automation.chain.link/bnb-chain-testnet/2778059989491363846783753651950428386877791283278505080907472850518416657168)
 - [Grants Contract keeper](https://automation.chain.link/bnb-chain-testnet/63457390810262199224027835803786444542526242183017067097854650391566355471133)
 
-# Flow Of the application 
+# Flow Of the application ✨
 
 <img width="858" alt="Screenshot 2024-03-05 at 9 44 20 PM" src="https://github.com/kushagrasarathe/bnbchain-hackathon/assets/91938348/5f4ad002-58c2-46f0-90e4-141633dfdcb8">
 
@@ -90,7 +89,8 @@ PeerSCI's NFTs, including member NFTs and contributor NFTs, were minted on the B
 # Authors
 
 - [Dhruv-2003](https://github.com/Dhruv-2003)
-- [kusagrasarathe](https://github.com/kushagrasarathe)
+- [kushagrasarathe](https://github.com/kushagrasarathe)
 
-# Next Steps
+# Next Steps 🚀
+
 PeerSCI is committed to continuous improvement and expansion. Future developments may include enhancing user experience, integrating additional features such as decentralized peer review, and exploring partnerships to further support scientific research and collaboration.
