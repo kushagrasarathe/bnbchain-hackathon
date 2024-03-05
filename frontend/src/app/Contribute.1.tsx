@@ -152,8 +152,8 @@ export default function Contribute() {
         <CardTitle>Support Researchers</CardTitle>
       </CardHeader>
 
-      <CardContent className=" space-y-5">
-        <div className=" w-full">
+      <CardContent className="space-y-5">
+        <div className="w-full">
           <Label className="space-y-2">
             <span>Grant Amount Required</span>
             <Input

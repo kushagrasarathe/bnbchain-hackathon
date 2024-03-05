@@ -147,7 +147,6 @@ export default function ExplorePage() {
     <div className="space-y-5 py-6">
       <div className="flex items-center justify-between">
         <h1 className=" text-2xl font-semibold">Read published researches</h1>
-        <Contribute />
       </div>
       {/* <div className="flex relative hadow-[8px_8px_0px_0px] order-2 border-black">
         <div className="absolute p-10 bg-[#f9f7f2]/40 backdrop-blur-xl h-full w-3/5 clip2">

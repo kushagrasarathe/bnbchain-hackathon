@@ -4,6 +4,8 @@ import hero from "@/assets/hero2.png";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { useRouter } from "next/navigation";
+import Contribute from "./Contribute.1";
+import contributorsExcali from "../../public/ExcaliDrawGrant.png";
 
 export default function Home() {
   const router = useRouter();
@@ -81,6 +83,15 @@ export default function Home() {
               <h1 className=" text-5xl font-bold">$20K+</h1>
               <div>In Grants</div>
             </div>
+          </div>
+        </div>
+      </div>
+      <div className="space-y-6 py-10 px-20">
+        <div className="text-2xl font-semibold">Contribute towards Science</div>
+        <div className="grid items-center grid-cols-12">
+          <Image alt="" src={contributorsExcali} className="col-span-8" />
+          <div className="px-4 col-span-4">
+            <Contribute />
           </div>
         </div>
       </div>
