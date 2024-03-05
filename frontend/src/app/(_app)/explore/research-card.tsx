@@ -19,7 +19,7 @@ export default function ResearchCard({
       <div className="flex flex-col justify-between h-full gap-y-3 ">
         <div className="space-y-3">
           <h1 className="text-xl font-semibold">{title}</h1>
-          <p>{description}</p>
+          <p>{description && description?.slice(0, 350)}...</p>
         </div>
         <Link href={`/explore/${id}`} className=" block w-full">
           <Button

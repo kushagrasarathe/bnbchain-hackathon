@@ -14,9 +14,10 @@ import {
 export interface Entry {
   id: bigint;
   cid: string;
+  votingStartTime: bigint;
   Name: string;
   About: string;
-  FieldofReseasrch: string;
+  FieldOfResearch: string;
   Institution: string;
   SocialMedia: string;
   ResearchInterests: string;
@@ -24,6 +25,7 @@ export interface Entry {
 export interface GrantRequest {
   id: bigint;
   cid: string;
+  votingStartTime: bigint;
   description: string;
   researchTitle: string;
   amount: number;
@@ -58,7 +60,7 @@ export default function DashboardTabs() {
 
   // fetch the data from the contract and then fetched the same from IPFS
   // returns an object that is then stored in the Array of request
-  const fetchEntry = async (_id: bigint) => {
+  const fetchEntry = async (_id: bigint): Promise<Entry | undefined> => {
     try {
       // filter the request from the contract on the basis of the voting time if closed then don't show
 
@@ -78,6 +80,7 @@ export default function DashboardTabs() {
       const parsedRequest = {
         id: _id,
         cid: request.ipfsURI,
+        votingStartTime: request.votingStartTime,
         ...response,
       };
       console.log(parsedRequest);
@@ -111,11 +114,25 @@ export default function DashboardTabs() {
         const requestsPromise = fetchEntry(BigInt(id));
         promises.push(requestsPromise);
       }
-      const _entries = await Promise.all(promises);
+      const _entries: (Entry | undefined)[] = await Promise.all(promises);
       console.log(_entries);
       console.log("ending...");
+
+      // filter out if the entry is closed or not , and even if they are executed and deleted
+
+      // remove the record if there is no CID
+      const filteredEntries = _entries
+        .filter((entry) => entry?.cid != undefined && entry?.cid != "")
+        .filter(
+          (entry) =>
+            Number(entry?.votingStartTime) + 172800 >
+            Number((Date.now() / 1000).toFixed(0))
+        );
+
+      console.log(filteredEntries);
+
       /// set the array of the objects of the requests is stored and can be rendered then
-      setEntries(_entries);
+      setEntries(filteredEntries);
       // setLoading(false);
       setIsLoading(false);
     } catch (error) {
@@ -148,6 +165,7 @@ export default function DashboardTabs() {
         id: _id,
         cid: request.content,
         amount: Number(formatEther(request.amountRequested)),
+        votingStartTime: request.VotingStartTime,
         ...response,
       };
       console.log(parsedRequest);
@@ -181,11 +199,21 @@ export default function DashboardTabs() {
         const requestsPromise = fetchGrantRequest(BigInt(id));
         promises.push(requestsPromise);
       }
-      const _grantReqs = await Promise.all(promises);
+      const _grantReqs: (GrantRequest | undefined)[] =
+        await Promise.all(promises);
       console.log(_grantReqs);
+
+      // filter out if the entry is closed or not , and even if they are executed and deleted
+      const filteredGrantReqs = _grantReqs.filter(
+        (grant) =>
+          Number(grant?.votingStartTime) + 604800 >
+          Number((Date.now() / 1000).toFixed(0))
+      );
+      console.log(filteredGrantReqs);
+
       console.log("ending...");
       /// set the array of the objects of the requests is stored and can be rendered then
-      setGrantReqs(_grantReqs);
+      setGrantReqs(filteredGrantReqs);
       // setLoading(false);
       setIsLoading(false);
     } catch (error) {
@@ -227,7 +255,7 @@ export default function DashboardTabs() {
                       name={entry?.Name ? entry.Name : "N/A"}
                       about={entry?.About ? entry.About : "N/A"}
                       fieldOfResearch={
-                        entry?.FieldofReseasrch ? entry.FieldofReseasrch : "N/A"
+                        entry?.FieldOfResearch ? entry.FieldOfResearch : "N/A"
                       }
                     />
                   );

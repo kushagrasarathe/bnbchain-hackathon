@@ -365,10 +365,11 @@ export default function PublishResearchForm() {
                   </Label>
                 </div>
                 <Button
+                  disabled={isLoading}
                   onClick={() => publishResearch()}
                   className="rounded-none w-full"
                 >
-                  Publish Research
+                  {isLoading ? <Loader /> : "Publish Research"}
                 </Button>
               </div>
             </Card>

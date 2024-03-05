@@ -14,12 +14,31 @@ import { useAccount, usePublicClient, useWalletClient } from "wagmi";
 import Contribute from "./Contribute.1";
 import Loading from "@/components/loader";
 
+export interface PublishResearchValues {
+  ID: string;
+  CID: string;
+  dop: bigint;
+  title: string;
+  institution: string;
+  abstract: string;
+  introduction: string;
+  methodology: string;
+  results: string;
+  discussion: string;
+  conclusion: string;
+  references: string;
+  fundingSource: string;
+  acknowledgments: string;
+  researchPaper: string;
+}
+
 export default function ExplorePage() {
   const { address: account, isConnected } = useAccount();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const publicClient = usePublicClient();
   const { data: walletClient } = useWalletClient();
-  const [researches, setResearches] = useState<({} | undefined)[]>();
+  const [researches, setResearches] =
+    useState<(PublishResearchValues | undefined)[]>();
 
   // fetched the member.json
   const fetchIPFS = async (metadataURI: string) => {
@@ -37,7 +56,9 @@ export default function ExplorePage() {
 
   // fetch the data from the contract and then fetched the same from IPFS
   // returns an object that is then stored in the Array of request
-  const fetchRequests = async (_id: bigint) => {
+  const fetchRequests = async (
+    _id: bigint
+  ): Promise<PublishResearchValues | undefined> => {
     try {
       const request = await publicClient?.readContract({
         account,
@@ -55,6 +76,7 @@ export default function ExplorePage() {
       const parsedRequest = {
         id: _id,
         cid: request.researchPaperURI,
+        dop: request.dateOfPublication,
         ...response,
       };
       console.log(parsedRequest);
@@ -88,11 +110,19 @@ export default function ExplorePage() {
         const requestsPromise = fetchRequests(BigInt(id));
         promises.push(requestsPromise);
       }
-      const _researches = await Promise.all(promises);
+      const _researches: (PublishResearchValues | undefined)[] =
+        await Promise.all(promises);
       console.log(_researches);
       console.log("ending...");
+
+      const filteredRequests = _researches.filter(
+        (researches) => researches?.title !== undefined
+      );
+
+      // filter Requests on the basis of dop , high dop , meaning research is show befoer
+      filteredRequests.reverse();
       /// set the array of the objects of the requests is stored and can be rendered then
-      setResearches(_researches);
+      setResearches(filteredRequests);
       // setLoading(false);
       setIsLoading(false);
     } catch (error) {
